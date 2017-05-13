@@ -12,9 +12,16 @@ int	get_next_line(const int fd, char **line)
 	if ((temp = ft_strnew(BUFF_SIZE)) == 0)
 		return (-1);
 	read_ret = nl_hunter(buf, temp, line, fd);
-//	printf("'read_ret' = %d\n", read_ret);
+	printf("'read_ret' = %d\n", read_ret);
 	if (read_ret > 0)
 		return (1);
+	else if (read_ret == 0 && *buf)
+	{
+		*line = buf;
+		printf("THE LINE:	%s\n", *line);
+		ft_bzero(buf, BUFF_SIZE);
+		return (1);
+	}
 /*
 	else if (*buf)
 	{
