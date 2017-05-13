@@ -5,7 +5,7 @@
 # include <sys/types.h>
 # include <sys/uio.h>
 # include <unistd.h>
-# include "../libft/libft.h"
+# include "libft/libft.h"
 # include <stdlib.h>
 
 # include <fcntl.h> /////////
