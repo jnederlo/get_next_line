@@ -1,44 +1,48 @@
 
 #include "get_next_line.h"
-#include <stdio.h> // REMOVE THIS!!!
 
 int	get_next_line(const int fd, char **line)
 {
 	static char	buf[BUFF_SIZE];
 	int			read_ret;
 	char		*temp;
-	size_t		size;
 
+	if ((read_ret = check_buf(buf, line)) == 1)
+		return (1);
 	if ((temp = ft_strnew(BUFF_SIZE)) == 0)
 		return (-1);
 	read_ret = nl_hunter(buf, temp, line, fd);
-	printf("'read_ret' = %d\n", read_ret);
-	if (read_ret > 0)
+	if (read_ret == 1)
 		return (1);
-	else if (read_ret == 0 && *buf)
-	{
-		*line = buf;
-		printf("THE LINE:	%s\n", *line);
-		ft_bzero(buf, BUFF_SIZE);
-		return (1);
-	}
-/*
-	else if (*buf)
-	{
-		size = ft_strlen(buf);
-		buf_hunter(buf, line, size);
-		printf("THE LINE:	%s\n", *line);
-		return (1);
-	}*/
-	else if (read_ret == 0)
+	if (read_ret == 0)
 		return (0);
-	else
-		return (-1);
+	return (-1);
+}
+
+int	check_buf(char *buf, char **line)
+{
+	int		i;
+	size_t	size;
+
+	i = 0;
+	size = ft_strlen(buf);
+	while (buf[i])
+	{
+		if (buf[i] == '\n')
+		{
+			ft_bzero(*line, size);
+			*line = ft_strncpy(*line, buf, i);
+			buf = buf_trim(buf, (i + 1), size);
+			return (1);
+		}
+		i++;
+	}
+	return (0);
 }
 
 char	*line_trim(char *temp)
 {
-	size_t	i;
+	int	i;
 
 	i = 0;
 	while (temp[i] != '\n')
@@ -90,25 +94,11 @@ int	nl_hunter(char *buf, char *temp, char **line, const int fd)
 			i++;
 		}
 	}
-	return (read_ret);
-}
-
-int	buf_hunter(char *buf, char **line, size_t size)
-{
-	int	i;
-
-	i = 0;
-	while (i < size)
+	if (read_ret == 0 && ft_strlen(temp) > 0)
 	{
-		if (buf[i] == '\n')
-		{
-			buf = buf_trim(buf, (i + 1), size);
-			*line = buf;
-			return (1);
-		}
-		i++;
+		*line = temp;
+		ft_bzero(buf, ft_strlen(buf));
+		return (1);
 	}
-	*line = buf;
-	ft_bzero(buf, BUFF_SIZE);
-	return (0);
+	return (read_ret);
 }
