@@ -1,5 +1,6 @@
 
 #include "get_next_line.h"
+#include <stdio.h>
 
 int	get_next_line(const int fd, char **line)
 {
@@ -61,7 +62,7 @@ char	*buf_trim(char *buf, int i, size_t buf_size)
 	if ((holder = ft_strnew(size)) == 0)
 		return (0);
 	k = 0;
-	while (i < buf_size)
+	while (i < (int)buf_size)
 	{
 		holder[k] = buf[i];
 		k++;
@@ -78,8 +79,13 @@ int	nl_hunter(char *buf, char *temp, char **line, const int fd)
 	size_t	read_ret;
 
 	temp = ft_strjoin(temp, buf);
+	printf("BUF CONTAINS:	%s\n", buf);
 	while ((read_ret = read(fd, buf, BUFF_SIZE)) > 0)
 	{
+		printf("READ_RET EQUALS:	%zu\n", read_ret);
+		if (read_ret < BUFF_SIZE)
+			//NEED TO TRIM BUF HERE...
+		printf("BUF NOW CONTAINS:	%s\n", buf);
 		temp = ft_strjoin(temp, buf);
 		i = 0;
 		while (i < BUFF_SIZE)
@@ -89,6 +95,7 @@ int	nl_hunter(char *buf, char *temp, char **line, const int fd)
 				temp = line_trim(temp);
 				*line = temp;
 				buf = buf_trim(buf, (i + 1), read_ret);
+				printf("BUF IS NOW TRIMMED TO:	%s/n", buf);
 				return (1);
 			}
 			i++;

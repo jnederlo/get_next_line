@@ -13,11 +13,10 @@
 # define BUFF_SIZE 10
 
 int		get_next_line(const int fd, char **line);
-char	*line_trim(char *temp);
-int		main(int argc, char **argv);
+//char	*line_trim(char *temp);
+//int		main(int argc, char **argv);
 int		open_file(char *file);
 int		nl_hunter(char *buf, char *temp, char **line, const int fd);
-int		buf_hunter(char *buf, char **line);
 char	*buf_trim(char *buf, int i, size_t buf_size);
 int		check_buf(char *buf, char **line);
 
