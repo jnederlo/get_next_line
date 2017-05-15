@@ -8,6 +8,8 @@ int	get_next_line(const int fd, char **line)
 	int			read_ret;
 	char		*temp;
 
+	if (!line || fd < 0)
+		return (-1);
 	if ((read_ret = check_buf(buf, line)) == 1)
 		return (1);
 	if ((temp = ft_strnew(BUFF_SIZE)) == 0)
@@ -15,9 +17,10 @@ int	get_next_line(const int fd, char **line)
 	read_ret = nl_hunter(buf, temp, line, fd);
 	if (read_ret == 1)
 		return (1);
-	if (read_ret == 0)
+	else if (read_ret == 0)
 		return (0);
-	return (-1);
+	else
+		return (-1);
 }
 
 int	check_buf(char *buf, char **line)
@@ -26,6 +29,8 @@ int	check_buf(char *buf, char **line)
 	size_t	size;
 
 	i = 0;
+	if (buf[0] == '\0')
+		return (0);
 	size = ft_strlen(buf);
 	while (buf[i])
 	{
@@ -79,13 +84,9 @@ int	nl_hunter(char *buf, char *temp, char **line, const int fd)
 	size_t	read_ret;
 
 	temp = ft_strjoin(temp, buf);
-	printf("BUF CONTAINS:	%s\n", buf);
+	ft_bzero(buf, ft_strlen(buf));
 	while ((read_ret = read(fd, buf, BUFF_SIZE)) > 0)
 	{
-		printf("READ_RET EQUALS:	%zu\n", read_ret);
-		if (read_ret < BUFF_SIZE)
-			//NEED TO TRIM BUF HERE...
-		printf("BUF NOW CONTAINS:	%s\n", buf);
 		temp = ft_strjoin(temp, buf);
 		i = 0;
 		while (i < BUFF_SIZE)
@@ -95,7 +96,6 @@ int	nl_hunter(char *buf, char *temp, char **line, const int fd)
 				temp = line_trim(temp);
 				*line = temp;
 				buf = buf_trim(buf, (i + 1), read_ret);
-				printf("BUF IS NOW TRIMMED TO:	%s/n", buf);
 				return (1);
 			}
 			i++;
