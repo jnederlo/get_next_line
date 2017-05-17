@@ -19,8 +19,7 @@ int	get_next_line(const int fd, char **line)
 		return (1);
 	else if (read_ret == 0)
 		return (0);
-	else
-		return (-1);
+	return (read_ret);
 }
 
 int	check_buf(char *buf, char **line)
@@ -29,9 +28,9 @@ int	check_buf(char *buf, char **line)
 	size_t	size;
 
 	i = 0;
-	if (buf[0] == '\0')
-		return (0);
-	size = ft_strlen(buf);
+//	if (buf[0] == '\0')
+//		return (0);
+	size = BUFF_SIZE;
 	while (buf[i])
 	{
 		if (buf[i] == '\n')
@@ -84,9 +83,11 @@ int	nl_hunter(char *buf, char *temp, char **line, const int fd)
 	size_t	read_ret;
 
 	temp = ft_strjoin(temp, buf);
-	ft_bzero(buf, ft_strlen(buf));
+	ft_bzero(buf, BUFF_SIZE);
+//	printf("The TEMP Contains:	%s\n", temp);
 	while ((read_ret = read(fd, buf, BUFF_SIZE)) > 0)
 	{
+//		printf("The BUF Contains:	%s\n", buf);
 		temp = ft_strjoin(temp, buf);
 		i = 0;
 		while (i < BUFF_SIZE)
@@ -104,7 +105,7 @@ int	nl_hunter(char *buf, char *temp, char **line, const int fd)
 	if (read_ret == 0 && ft_strlen(temp) > 0)
 	{
 		*line = temp;
-		ft_bzero(buf, ft_strlen(buf));
+		ft_bzero(buf, BUFF_SIZE);
 		return (1);
 	}
 	return (read_ret);

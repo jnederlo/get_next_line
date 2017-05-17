@@ -10,7 +10,7 @@
 
 # include <fcntl.h> /////////
 
-# define BUFF_SIZE 100
+# define BUFF_SIZE 8
 
 int		get_next_line(const int fd, char **line);
 int		open_file(char *file);
