@@ -1,4 +1,4 @@
-#include "get_next_line.h"
+#include "../gnl/get_next_line.h"
 
 #include <stdio.h>
 
@@ -30,7 +30,7 @@ int	main(int argc, char **argv)
 	// READ FD2
 	if((check2 = get_next_line(fd2, &line)) == 1)
 	{
-		printf("FD2:\t%s\n", line);
+		printf("fd2[1]:\t%s\n", line);
 	}
 	if (check2 == -1)
 		printf("ERROR 2!\n");
@@ -40,7 +40,7 @@ int	main(int argc, char **argv)
 	// READ FD1
 	while((check1 = get_next_line(fd1, &line)) == 1)
 	{
-		printf("line: %s\n", line);
+		printf("fd1: %s\n", line);
 	}
 	if (check1 == -1)
 		printf("ERROR 1!\n");
@@ -50,7 +50,7 @@ int	main(int argc, char **argv)
 	// READ FD2
 	if((check2 = get_next_line(fd2, &line)) == 1)
 	{
-		printf("FD2:\t%s\n", line);
+		printf("fd2[2]:\t%s\n", line);
 	}
 	if (check2 == -1)
 		printf("ERROR 2!\n");
@@ -70,7 +70,7 @@ int	main(int argc, char **argv)
 	// // READ FD2
 	if((check2 = get_next_line(fd2, &line)) == 1)
 	{
-		printf("FD2:\t%s\n", line);
+		printf("fd2[3]:\t%s\n", line);
 	}
 	if (check2 == -1)
 		printf("ERROR 2!\n");

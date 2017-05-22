@@ -22,10 +22,18 @@
 
 # define BUFF_SIZE 2048
 
+typedef struct		s_gnl
+{
+	char			buf[BUFF_SIZE + 1];
+	int				fd;
+	struct s_gnl	*next;
+}					t_gnl;
+
 int		get_next_line(const int fd, char **line);
-char	*line_trim(char *temp);
 int		nl_hunter(char *buf, char *temp, char **line, const int fd);
-char	*buf_trim(char *buf, int i, int buf_size);
-int		buf_check(char *buf, char *temp, char **line, int read_ret);
+//char	*buf_trim(char *buf, int i, int buf_size);
+char	*ft_linestrip(char *s, char c);
+int		buf_check(char *buf, char *temp, char **line);
+t_gnl	*gnl_list(t_gnl *head, int fd);
 
 #endif

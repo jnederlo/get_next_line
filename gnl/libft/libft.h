@@ -87,5 +87,6 @@ char				*ft_word_copy(const char *s, char c);
 int					ft_count_words(const char *s, char c);
 int					ft_is_whitespace(int c);
 int					ft_count_digits(int n);
+char				*ft_linetrim(char *s, char c);
 
 #endif

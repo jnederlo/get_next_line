@@ -1,6 +1,6 @@
 
 
-#include "get_next_line.h"
+#include "../gnl/get_next_line.h"
 #include <stdio.h>
 
 int	open_file(char *file)
